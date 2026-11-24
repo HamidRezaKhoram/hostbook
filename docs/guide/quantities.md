@@ -49,6 +49,7 @@ The app cooks for **expected guests**, not invited guests.
 | Wine | 750 mL bottle ≈ 5 glasses (142 mL) | [S] |
 | Liquor | 750 mL bottle ≈ 17 drinks (43 mL shots) | [S] |
 | Beer / seltzer | 341 mL bottle or 355 mL can = 1 drink; 473 mL tall can ≈ 1.4 | [S] |
+| Alcohol mix (if unsure) | ~45% wine, ~35% beer/cider/seltzer, ~20% spirits; adjust to your crowd | [H] |
 | Water | ~0.5 L per guest per evening, double if hot | [H] |
 | Coffee/tea at the end | ~1 cup for half the guests | [H] |
 
@@ -62,7 +63,7 @@ The app cooks for **expected guests**, not invited guests.
 | Hot / outdoors | Double it | [S] |
 | Extra for chilling coolers/tubs | +0.45 kg (1 lb) per guest | [S] |
 
-The app shows a bag count (using the bag-size setting), not just weight.
+The app shows a bag count using the bag-size setting (default **4 kg**, [H]: change it to what your store sells), not just weight.
 
 ## Food
 
@@ -83,10 +84,10 @@ The app shows a bag count (using the bag-size setting), not just weight.
 | Item | Per guest | Tag |
 |---|---|---|
 | Cups | 2 (people lose cups) | [H] |
-| Plates | 1.5 per course served | [H] |
+| Plates | 1.5 per course served (a meal counts as 2: main + dessert) | [H] |
 | Napkins | 3 | [H] |
-| Cutlery sets | 1.5 | [H] |
-| Trash bags | 1 large per ~10 guests, plus recycling | [H] |
+| Cutlery sets | 1.5 (meals only) | [H] |
+| Trash bags | 1 large per ~10 guests (at least 1), plus recycling | [H] |
 | Seating (mingling party) | Seats for ~1/3 of guests | [H] |
 | Seating (dinner) | Seat for everyone, obviously | — |
 | Standing space | ~1 m² per person feels lively | [H] |

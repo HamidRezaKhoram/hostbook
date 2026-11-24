@@ -30,8 +30,8 @@ jobs:
         run: npx tsc --noEmit
       - name: Lint
         run: npx eslint . && npx prettier --check .
-      - name: Unit tests
-        run: npx vitest run
+      - name: Unit tests + coverage (≥ 90% of domain code)
+        run: npx vitest run --coverage
       - name: Firebase rules + sync (emulators)
         run: npm run -s test:emulator
       - name: Build

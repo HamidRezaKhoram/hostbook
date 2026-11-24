@@ -134,7 +134,17 @@ interface Meal { id: string; label: string; time?: string; teamIds: string[]; me
 
 If a guest has several roles, use the **earliest** arrival. Constants live in `src/domain/constants.ts` and come from `docs/guide/quantities.md` → Time.
 
-## Guest share payload (v1)
+## Links
+
+| Link | Route | Data |
+|---|---|---|
+| Live guest link | `#/g/{partyId}/{token}` | Firebase `/shares` (ADR-010) |
+| Public potluck board | `#/b/{partyId}` | Firebase `/shares/{partyId}/board` |
+| Offline fallback link | `#/i/{payload}` | `src/domain/payload.ts`: lz-string of `{ v: 1, i: ShareInfo, g: GuestShare, u: updatedAt }` |
+
+The section below was the first design for the offline payload; the implementation reuses the `ShareInfo` / `GuestShare` projections from `src/domain/share.ts` instead of separate short keys, and still stays under 1,500 characters (tested).
+
+## Guest share payload (v1, original design)
 
 Short keys keep the link small. Built only by `buildGuestPayload(party, guestId)`.
 

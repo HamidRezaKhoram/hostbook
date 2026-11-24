@@ -1,6 +1,6 @@
 # Hostbook: notes for Claude
 
-Phone-first, one-page party-hosting app on GitHub Pages. Status: M1 (app shell) done and deployed; next is M2 (domain core). Live at https://hamidrezakhoram.github.io/hostbook/.
+Phone-first, one-page party-hosting app on GitHub Pages. Status: M1 (app shell) and M2 (domain core in `src/domain/`) done; next is M3 (host screens). Live at https://hamidrezakhoram.github.io/hostbook/.
 
 - Read first: `docs/planning/roadmap.md` (what's next + open questions), then `product-spec.md`, `architecture.md`, `data-model.md`, `ui-guidelines.md`.
 - Follow `CONTRIBUTING.md` exactly: run `./scripts/test-all.sh` before and after every change; UI fixes need a Playwright phone-profile test that fails on old code first.

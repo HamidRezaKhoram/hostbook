@@ -28,7 +28,7 @@ Rules for anyone (human or AI) building Hostbook. Read the [Product Spec](docs/p
 
 | Layer | Tool | What |
 |---|---|---|
-| Domain | Vitest | Calculator, headcount, arrival offsets, nudges, templates, share codec, migrations |
+| Domain | Vitest + v8 coverage (≥ 90% lines enforced) | Calculator, headcount, arrival offsets, nudges, templates, share projections, link codec, migrations |
 | Store | Vitest + `fake-indexeddb` | Save/load, migration on load, export/import round-trip |
 | Firebase rules + sync | Vitest in the auth + database emulators (`npm run test:emulator`) | Every rule allows what it should and denies what it shouldn't; the real adapter works across host/guest "devices" |
 | UI / flows | Playwright, `iPhone 13` + `Pixel 7` device profiles, touch enabled | User stories in the spec, one test each |

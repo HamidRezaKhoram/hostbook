@@ -17,17 +17,17 @@ Each milestone ends with: `scripts/test-all.sh` green, deployed to GitHub Pages,
 - [x] PWA manifest + service worker, installable, works offline (e2e-tested)
 - [x] axe accessibility checks on every tab, light and dark
 
-## M2: Domain core (no UI)
-- [ ] `types.ts`, factories, constants
-- [ ] `src/lib/format.ts`: en-CA dates/times, kg-first weights with lb, mL/L, CAD (ADR-011)
-- [ ] Role → arrival offsets, `arrivalTime`
-- [ ] `expectedHeadcount`, `gapsByCategory`, `dietarySummary` (Health Canada allergens)
-- [ ] Calculator per `quantities.md` (Canadian standard drink, ice bag size setting)
-- [ ] Templates (8 party types) from the guide and checklists
-- [ ] Share projection: `guestView(party, guestId)` and `boardView(party)` + privacy tests
-- [ ] URL-payload codec (offline fallback links)
-- [ ] Migrations framework + fixture test
-- **Done when:** ≥ 90% line coverage on `src/domain/`.
+## M2: Domain core (no UI) ✅ (2026-11-24)
+- [x] `types.ts`, factories (incl. paste-a-list name parser), constants
+- [x] `src/lib/format.ts`: en-CA dates/times, kg-first weights with lb, mL/L, CAD (ADR-011); `src/lib/time.ts` wall-clock arithmetic
+- [x] Role → arrival/leave offsets, `arrivalTime`, `leaveTime`
+- [x] `headcount`, `bringBoard` (gaps by category), `dietarySummary`, `allergiesWithoutSafeDish`
+- [x] Calculator per `quantities.md` (worked examples are tests)
+- [x] Templates for 8 party types + custom, from the guide's playbooks and checklists
+- [x] Share projections `shareInfo`, `guestShare`, `boardSlots`, `buildPublish` + privacy tests (no private data in any share)
+- [x] Offline link codec (`#/i/<payload>`, < 1,500 chars)
+- [x] Migrations framework + v1 fixture test
+- **Result:** 107 unit tests, 100% line coverage of `src/domain/` and `src/lib/` (CI fails below 90%).
 
 ## M3: MVP host app
 - [ ] Party list, create from template, edit, duplicate, delete

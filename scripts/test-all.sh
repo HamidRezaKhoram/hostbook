@@ -15,7 +15,7 @@ exec scripts/ct.sh '
   npx eslint .
   npx prettier --check . >/dev/null
   echo "eslint + prettier: clean"
-  echo; echo "== 3/6 unit ==";  npx vitest run
+  echo; echo "== 3/6 unit + coverage ==";  npx vitest run --coverage
   echo; echo "== 4/6 Firebase rules + sync (emulators) =="
   if npm run -s test:emulator >/tmp/emulator.log 2>&1; then
     grep -E "✓|Test Files|Tests  " /tmp/emulator.log | grep -v "^i "

@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "test:unit": "vitest run",
+    "test:unit": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:emulator": "firebase emulators:exec --only auth,database --project demo-hostbook 'vitest run --config vitest.emulator.config.ts'",
     "deploy:rules": "firebase deploy --only database --project \"$VITE_FIREBASE_PROJECT_ID\" --non-interactive"
@@ -19,7 +19,8 @@
   "dependencies": {
     "@preact/signals": "^2.0.0",
     "preact": "^10.25.0",
-    "firebase": "^12.0.0"
+    "firebase": "^12.0.0",
+    "lz-string": "^1.5.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "~4.10.2",
@@ -36,7 +37,8 @@
     "vite-plugin-pwa": "^0.21.0",
     "vitest": "^3.0.0",
     "firebase-tools": "^14.0.0",
-    "@firebase/rules-unit-testing": "^5.0.0"
+    "@firebase/rules-unit-testing": "^5.0.0",
+    "@vitest/coverage-v8": "^3.2.0"
   },
   "overrides": {
     "playwright-core": "1.49.1"

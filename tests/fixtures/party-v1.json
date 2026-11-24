@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "6f1c2d1e-1111-4a5b-9c8d-000000000001",
+  "name": "Dumpling Night",
+  "purpose": "Mix the climbing and work crews",
+  "type": "potluck",
+  "start": "2026-12-12T19:00",
+  "end": "2026-12-12T23:00",
+  "tz": "America/Toronto",
+  "location": { "address": "12 Birch Rd", "parking": "Street", "access": "Code 4412" },
+  "details": { "food": "potluck", "alcohol": true, "plusOnes": "yes", "kids": "ask" },
+  "host": { "name": "Hamid", "phone": "+1 555 0100", "count": 1 },
+  "guests": [
+    {
+      "id": "g-maya",
+      "name": "Maya",
+      "rsvp": "yes",
+      "plusOnes": 0,
+      "roles": ["helper"],
+      "dietary": { "allergies": [], "diets": ["vegetarian"], "religious": [] },
+      "token": "AAAAAAAAAAAAAAAAAAAAAA"
+    },
+    {
+      "id": "g-sam",
+      "name": "Sam",
+      "rsvp": "maybe",
+      "plusOnes": 1,
+      "roles": ["regular"],
+      "arrivalOffsetMin": 30,
+      "dietary": { "allergies": ["tree-nut"], "diets": [], "religious": [], "note": "EpiPen" }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t-ice",
+      "kind": "bring",
+      "title": "Ice",
+      "category": "ice",
+      "quantity": "10 kg",
+      "assigneeIds": ["g-maya"],
+      "status": "confirmed",
+      "when": "arrival",
+      "source": "template"
+    },
+    {
+      "id": "t-cake",
+      "kind": "bring",
+      "title": "Dessert",
+      "category": "dessert",
+      "assigneeIds": [],
+      "status": "open",
+      "when": { "at": "2026-12-12T21:00" },
+      "safeFor": { "allergenFree": ["tree-nut"] }
+    }
+  ],
+  "runSheet": [{ "id": "r-1", "offsetMin": 0, "title": "Guests arrive" }],
+  "checklist": [
+    { "id": "c-1", "bucket": "w1", "text": "Chase replies", "done": true, "guideRef": "3" }
+  ],
+  "notes": "Private notes",
+  "share": { "partyId": "BBBBBBBBBBBBBBBBBBBBBB", "publishedAt": "2026-11-30T12:00:00.000Z" },
+  "createdAt": "2026-11-24T12:00:00.000Z",
+  "updatedAt": "2026-11-30T12:00:00.000Z"
+}

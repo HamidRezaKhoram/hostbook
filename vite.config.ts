@@ -49,5 +49,12 @@ export default defineConfig({
   test: {
     include: ['tests/unit/**/*.test.ts'],
     environment: 'node',
+    coverage: {
+      provider: 'v8',
+      include: ['src/domain/**', 'src/lib/**', 'src/app/router.ts'],
+      reporter: ['text-summary'],
+      // Roadmap M2: domain logic stays at 90%+.
+      thresholds: { lines: 90, statements: 90, functions: 90, branches: 85 },
+    },
   },
 });

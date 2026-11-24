@@ -102,7 +102,7 @@ Priorities: **P0** = MVP must-have, **P1** = soon after, **P2** = later.
 4. **Share.** I tap Leo → "Send Leo's link". The share sheet opens with a short message and the link. Leo opens it on his phone, sees *"Arrive 7:00 · Bring 10 lb ice · 12 Birch Rd · park on the street · door code 4412"*, and taps "👍 I'm in" to text me back.
 5. **Gaps.** The Bring board shows "2 open: dessert, cups" in red at the top.
 6. **Dietary.** I see "Sam: tree-nut allergy" next to the dessert slot.
-7. **Calculator.** 18 expected guests, 4 h, hot → it says 90 drinks (≥ 23 NA) and 54–72 lb of ice in total (36–54 lb for drinks plus 18 lb for chilling), so 6–8 bags of 10 lb. I tap "Add as tasks."
+7. **Calculator.** 18 expected guests, 4 h, hot → it says 90 drinks (≥ 23 NA) and 24.3–33.3 kg (54–73 lb) of ice for drinks and chilling, so 7–9 bags of 4 kg. I tap "Add as tasks."
 8. **Day of.** I open day mode and see "Now: setup crew arrives · Next 6:45: seed friends."
 9. **After.** I mark who came, write my debrief, and duplicate the party for next year.
 10. **Offline.** On airplane mode, everything above (except sending) still works.
