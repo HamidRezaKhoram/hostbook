@@ -1,0 +1,54 @@
+/* Design tokens. Components use these, never raw values (CONTRIBUTING.md). */
+:root {
+  color-scheme: light dark;
+
+  --color-bg: #faf6ef;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3ece1;
+  --color-text: #2b2521;
+  --color-muted: #6b6159;
+  --color-border: #e6ddd0;
+  --color-accent: #b4532a;
+  --color-accent-text: #ffffff;
+  --color-accent-soft: #f6e2d6;
+  --color-focus: #1f6feb;
+  --shadow-1: 0 1px 2px rgb(60 40 20 / 0.06), 0 2px 8px rgb(60 40 20 / 0.06);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-1: 8px;
+  --radius-2: 14px;
+  --radius-pill: 999px;
+
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+
+  --tap: 48px;
+  --nav-height: 64px;
+  --content-max: 560px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1c1815;
+    --color-surface: #27221e;
+    --color-surface-2: #312b26;
+    --color-text: #f3ece3;
+    --color-muted: #b5a99c;
+    --color-border: #3d362f;
+    --color-accent: #f0915f;
+    --color-accent-text: #1c1815;
+    --color-accent-soft: #46301f;
+    --color-focus: #6ea8ff;
+    --shadow-1: none;
+  }
+}
