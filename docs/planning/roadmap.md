@@ -29,14 +29,15 @@ Each milestone ends with: `scripts/test-all.sh` green, deployed to GitHub Pages,
 - [x] Migrations framework + v1 fixture test
 - **Result:** 107 unit tests, 100% line coverage of `src/domain/` and `src/lib/` (CI fails below 90%).
 
-## M3: MVP host app
-- [ ] Party list, create from template, edit, duplicate, delete
-- [ ] Guests (paste-to-add, RSVP, roles, arrival, dietary)
-- [ ] Bring board + tasks + assignment sheet
-- [ ] Timeline (run sheet) and host checklist
-- [ ] Notes
-- [ ] IndexedDB persistence, `storage.persist()`, export/import JSON
-- **Done when:** user stories 1–3, 5, 6, 9, 10 in `product-spec.md` pass as Playwright tests on both phone profiles.
+## M3: MVP host app ✅ (2026-11-24)
+- [x] Party list, create from template (one form, paste names), edit details, duplicate, delete with undo
+- [x] Guests (paste-to-add, RSVP, plus-ones, roles, arrival override, dietary, private note, remove with undo)
+- [x] Bring board with open count, dietary summary, jobs and host to-dos; task sheet (assign, status, when, note, "free of" allergens)
+- [x] Timeline: prep checklist by stage ("Now" marked) and the day's run sheet with guest arrivals
+- [x] Notes and after-party debrief (who came, what worked)
+- [x] IndexedDB persistence, `storage.persist()`, backup file save/restore
+- [x] Target phones: iPhone 13 (WebKit), Pixel 7 and Galaxy S22 (Chromium) profiles in every e2e run
+- **Result:** user stories 1–3, 5, 6, 9, 10 pass as Playwright tests on all three phones, plus undo, backup/restore, screen-switch and accessibility checks.
 
 ## M4: Live sharing with Firebase (ADR-010)
 - [x] **Owner step:** Firebase project created (anonymous auth, RTDB us-central1, locked) — 2026-11-23

@@ -4,7 +4,7 @@ Rules for anyone (human or AI) building Hostbook. Read the [Product Spec](docs/p
 
 ## Golden rules
 
-1. **Phone first.** Build and check every screen at 375 px wide before anything else.
+1. **Phone first.** Target phones: iPhone, Pixel 7 and newer, Samsung Galaxy S22 and newer. Build and check every screen at 360 px wide (Galaxy S22) first.
 2. **Test before and after every change.** Run `./scripts/test-all.sh` before you start (to know the baseline) and after (it must pass). Never commit red.
 3. **UI fixes are proven with a failing test first.** Write a Playwright test on a phone profile that fails on the old code, then fix it, then watch it pass. Tests drive the real UI with taps, not by calling functions.
 4. **Domain logic is pure** (`src/domain/`): no DOM, storage, Preact or network imports. All of it is unit-tested.
@@ -31,7 +31,7 @@ Rules for anyone (human or AI) building Hostbook. Read the [Product Spec](docs/p
 | Domain | Vitest + v8 coverage (≥ 90% lines enforced) | Calculator, headcount, arrival offsets, nudges, templates, share projections, link codec, migrations |
 | Store | Vitest + `fake-indexeddb` | Save/load, migration on load, export/import round-trip |
 | Firebase rules + sync | Vitest in the auth + database emulators (`npm run test:emulator`) | Every rule allows what it should and denies what it shouldn't; the real adapter works across host/guest "devices" |
-| UI / flows | Playwright, `iPhone 13` + `Pixel 7` device profiles, touch enabled | User stories in the spec, one test each |
+| UI / flows | Playwright with touch, on three phones: `iPhone 13` (WebKit), `Pixel 7` and a custom `Galaxy S22` (Chromium, 360 px: the narrowest target) | User stories in the spec, one test each |
 | Offline | Playwright `context.setOffline(true)` | Create/edit after going offline, reload |
 | Visual sanity | Playwright screenshots at 360 / 375 / 430 widths | Catch overflow, clipped buttons |
 | a11y | `@axe-core/playwright` | No serious violations on each main screen |

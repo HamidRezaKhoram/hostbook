@@ -1,32 +1,42 @@
-import type { FunctionComponent } from 'preact';
-import { BottomNav } from '../components/BottomNav';
+import { ToastHost } from '../components/ToastHost';
 import { UpdateToast } from '../components/UpdateToast';
-import { Bring } from '../views/Bring';
-import { Guests } from '../views/Guests';
-import { More } from '../views/More';
-import { Overview } from '../views/Overview';
-import { Timeline } from '../views/Timeline';
+import { parties, ready } from '../store/parties';
+import { Home } from '../views/Home';
+import { NewParty } from '../views/NewParty';
+import { PartyScreen } from '../views/party/PartyScreen';
 import { route } from './route';
-import type { Tab } from './router';
 
-const VIEWS: Record<Tab, FunctionComponent> = {
-  overview: Overview,
-  guests: Guests,
-  bring: Bring,
-  timeline: Timeline,
-  more: More,
-};
+function Body() {
+  const r = route.value;
+  if (!ready.value) return <main class="app" aria-busy="true" />;
+  if (r.name === 'new') return <NewParty />;
+  if (r.name === 'party') {
+    const party = parties.value.find((p) => p.id === r.id);
+    if (party) return <PartyScreen party={party} tab={r.tab} />;
+    return (
+      <main class="app">
+        <section class="screen">
+          <h1 class="screen__title">Party not found</h1>
+          <p>
+            This party isn't saved on this device. It may have been deleted, or made on another
+            phone.
+          </p>
+          <a class="btn btn--block" href="#/">
+            Your parties
+          </a>
+        </section>
+      </main>
+    );
+  }
+  return <Home />;
+}
 
 export function App() {
-  const { tab } = route.value;
-  const View = VIEWS[tab];
   return (
     <>
-      <main class="app">
-        <View />
-      </main>
+      <Body />
+      <ToastHost />
       <UpdateToast />
-      <BottomNav current={tab} />
     </>
   );
 }

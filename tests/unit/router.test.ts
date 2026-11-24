@@ -1,22 +1,35 @@
 import { describe, expect, it } from 'vitest';
-import { hrefFor, parseHash, TABS } from '../../src/app/router';
+import { hrefFor, parseHash, partyHref, TABS, type Route } from '../../src/app/router';
 
-describe('parseHash', () => {
-  it.each(['', '#', '#/', '#//'])('treats %j as the overview', (hash) => {
-    expect(parseHash(hash)).toEqual({ name: 'tab', tab: 'overview' });
+describe('routes', () => {
+  it.each(['', '#', '#/', '#//', '#/nope', '#/p', '#/p/', '#/new/x', '#/p/abc/nope', '#/p/a/b/c'])(
+    'treats %j as home',
+    (hash) => expect(parseHash(hash)).toEqual({ name: 'home' }),
+  );
+
+  it('parses the new-party screen', () => {
+    expect(parseHash('#/new')).toEqual({ name: 'new' });
+    expect(parseHash('#/new/')).toEqual({ name: 'new' });
   });
 
-  it.each(TABS)('round-trips the %s tab through hrefFor', (tab) => {
-    expect(parseHash(hrefFor(tab))).toEqual({ name: 'tab', tab });
+  it('parses a party, defaulting to its overview', () => {
+    expect(parseHash('#/p/abc-123')).toEqual({ name: 'party', id: 'abc-123', tab: 'overview' });
+    expect(parseHash('#/p/abc-123/guests?from=x')).toEqual({
+      name: 'party',
+      id: 'abc-123',
+      tab: 'guests',
+    });
   });
 
-  it('tolerates a trailing slash and a query string', () => {
-    expect(parseHash('#/guests/')).toEqual({ name: 'tab', tab: 'guests' });
-    expect(parseHash('#/bring?from=share')).toEqual({ name: 'tab', tab: 'bring' });
-  });
+  const routes: Route[] = [
+    { name: 'home' },
+    { name: 'new' },
+    ...TABS.map((tab) => ({ name: 'party', id: 'id with/slash', tab }) as const),
+  ];
+  it.each(routes)('round-trips %j', (r) => expect(parseHash(hrefFor(r))).toEqual(r));
 
-  it('falls back to the overview for unknown routes', () => {
-    expect(parseHash('#/nope')).toEqual({ name: 'tab', tab: 'overview' });
-    expect(parseHash('#/guests/extra')).toEqual({ name: 'tab', tab: 'overview' });
+  it('keeps overview links short', () => {
+    expect(partyHref('abc')).toBe('#/p/abc');
+    expect(partyHref('abc', 'bring')).toBe('#/p/abc/bring');
   });
 });

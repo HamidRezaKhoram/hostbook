@@ -4,7 +4,7 @@
 
 It also includes a hosting guide built from research on what makes gatherings work.
 
-> **Status:** M1 done: the app shell is live at **https://hamidrezakhoram.github.io/hostbook/** (installable, works offline). Party features come next; see the [Roadmap](docs/planning/roadmap.md).
+> **Status:** M3 done: plan real parties at **https://hamidrezakhoram.github.io/hostbook/** on iPhone, Pixel 7+ or Galaxy S22+ (installable, works offline, data stays on your phone). Sharing links with guests comes next (M4); see the [Roadmap](docs/planning/roadmap.md).
 
 ---
 
@@ -48,7 +48,7 @@ See the full [Product Spec](docs/planning/product-spec.md).
 | Storage | IndexedDB on the device; JSON export/import |
 | Offline | PWA via `vite-plugin-pwa` |
 | Sharing | Firebase Realtime DB (free plan, anonymous auth) for live RSVP and claiming; URL-fragment links as offline fallback |
-| Tests | Vitest (domain), Playwright with real taps on iPhone 13 (WebKit) and Pixel 7 (Chromium), axe a11y |
+| Tests | Vitest (domain), Playwright with real taps on iPhone 13 (WebKit), Pixel 7 and Galaxy S22 (Chromium), axe a11y |
 | Tooling | Everything runs in the Playwright container: the host needs only podman or docker |
 
 ## Getting started

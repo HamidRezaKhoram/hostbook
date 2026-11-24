@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'preact';
-import { hrefFor, type Tab } from '../app/router';
+import { partyHref, type Tab } from '../app/router';
 import { BasketIcon, ClockIcon, GuestsIcon, HomeIcon, MoreIcon } from './icons';
 
 const ITEMS: { tab: Tab; label: string; Icon: FunctionComponent }[] = [
@@ -10,13 +10,13 @@ const ITEMS: { tab: Tab; label: string; Icon: FunctionComponent }[] = [
   { tab: 'more', label: 'More', Icon: MoreIcon },
 ];
 
-export function BottomNav({ current }: { current: Tab }) {
+export function BottomNav({ partyId, current }: { partyId: string; current: Tab }) {
   return (
-    <nav class="bottom-nav" aria-label="Main">
+    <nav class="bottom-nav" aria-label="Party">
       {ITEMS.map(({ tab, label, Icon }) => (
         <a
           key={tab}
-          href={hrefFor(tab)}
+          href={partyHref(partyId, tab)}
           class="bottom-nav__item"
           aria-current={tab === current ? 'page' : undefined}
         >

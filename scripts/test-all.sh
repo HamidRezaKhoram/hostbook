@@ -4,7 +4,7 @@
 #   SKIP_E2E=1 scripts/test-all.sh # skip the browser tests
 set -euo pipefail
 cd "$(dirname "$0")/.."
-e2e='echo; echo "== 6/6 e2e (iPhone 13 WebKit + Pixel 7 Chromium) =="; npx playwright test'
+e2e='echo; echo "== 6/6 e2e (iPhone 13 · Pixel 7 · Galaxy S22) =="; npx playwright test'
 [ "${SKIP_E2E:-0}" = 1 ] && e2e='echo "(e2e skipped)"'
 exec scripts/ct.sh '
   set -e

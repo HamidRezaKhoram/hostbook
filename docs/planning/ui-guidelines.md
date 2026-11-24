@@ -4,7 +4,8 @@ Hostbook is used **standing in a kitchen, one hand on a phone, the other holding
 
 ## Layout
 
-- Design at **375 × 667** first (small iPhone), check at 360 (small Android) and 430 (large phones), then let it center on desktop at a max width of ~560 px.
+- **Target phones:** iPhone (Safari), Pixel 7 and newer (Chrome), Samsung Galaxy S22 and newer (Samsung Internet / Chrome). Design at **360 px** (Galaxy S22, the narrowest), check at 390 (iPhone) and 412 (Pixel), then let it center on desktop at a max width of ~560 px.
+- Screen changes always start at the top, reset *before* the new screen renders (`src/app/route.ts`).
 - **Bottom tab bar** (thumb zone), 5 tabs max:
   `Overview · Guests · Bring · Timeline · More` (More = Notes, Guide, Calculator, Backup, Settings).
 - **Primary action button** bottom-right, above the tab bar ("+ Guest", "+ Item"...), context-dependent.
