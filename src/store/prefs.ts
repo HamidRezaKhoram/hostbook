@@ -3,6 +3,8 @@ const KEY = 'hostbook.prefs';
 
 interface Prefs {
   hostName?: string;
+  /** Name used on open bring boards. */
+  boardName?: string;
 }
 
 function read(): Prefs {

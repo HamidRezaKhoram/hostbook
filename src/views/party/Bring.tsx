@@ -5,6 +5,7 @@ import { bringBoard, dietarySummary, isCovered } from '../../domain/derive';
 import type { Party, Task } from '../../domain/types';
 import { updateParty } from '../../store/parties';
 import { PartyKicker, type PartyProps } from './common';
+import { ShareSheet } from './ShareSheet';
 import { AddTaskSheet, STATUS_LABELS, TaskSheet } from './TaskSheet';
 
 function TaskRow({ party, task, onOpen }: { party: Party; task: Task; onOpen: () => void }) {
@@ -38,6 +39,7 @@ function TaskRow({ party, task, onOpen }: { party: Party; task: Task; onOpen: ()
 export function Bring({ party }: PartyProps) {
   const [editing, setEditing] = useState<string | null>(null);
   const [adding, setAdding] = useState<Task['kind'] | null>(null);
+  const [sharing, setSharing] = useState(false);
   const board = bringBoard(party);
   const open = board.reduce((n, g) => n + g.open.length, 0);
   const jobs = party.tasks.filter((t) => t.kind === 'do');
@@ -55,9 +57,14 @@ export function Bring({ party }: PartyProps) {
           <strong>Dietary:</strong> {diet}
         </p>
       )}
-      <button type="button" class="btn btn--block" onClick={() => setAdding('bring')}>
-        + Add
-      </button>
+      <div class="button-grid">
+        <button type="button" class="btn" onClick={() => setAdding('bring')}>
+          + Add
+        </button>
+        <button type="button" class="btn btn--ghost" onClick={() => setSharing(true)}>
+          Share the bring board
+        </button>
+      </div>
 
       {board.map((g) => (
         <section key={g.category} class="stack-sm" aria-labelledby={`cat-${g.category}`}>
@@ -127,6 +134,7 @@ export function Bring({ party }: PartyProps) {
         </section>
       )}
 
+      {sharing && <ShareSheet party={party} guestId={null} onClose={() => setSharing(false)} />}
       {current && <TaskSheet party={party} task={current} onClose={() => setEditing(null)} />}
       {adding && (
         <AddTaskSheet

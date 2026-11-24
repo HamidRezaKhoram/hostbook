@@ -7,6 +7,7 @@ import { prepProgress } from '../../domain/progress';
 import { formatWhen } from '../../lib/format';
 import { nowLocal } from '../../lib/time';
 import { updateParty } from '../../store/parties';
+import { MapButtons } from '../../components/MapButtons';
 import { DetailsSheet } from './DetailsSheet';
 import type { PartyProps } from './common';
 
@@ -31,6 +32,7 @@ export function Overview({ party }: PartyProps) {
       <div class="lede-block">
         <p class="when">{formatWhen(party.start, party.end)}</p>
         {party.location.address && <p class="muted">{party.location.address}</p>}
+        <MapButtons address={party.location.address} custom={party.location.mapsUrl} />
         {party.purpose ? (
           <p class="purpose">“{party.purpose}”</p>
         ) : (

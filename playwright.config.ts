@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Tests run against the production build (`vite preview`), so the /hostbook/ base path and
-// the service worker are exercised exactly as on GitHub Pages. Build first (test-all.sh does).
+// Tests run against a production build (`npm run build:e2e` → dist-e2e) served by `vite preview`,
+// so the /hostbook/ base path and the service worker work exactly as on GitHub Pages. That build
+// talks to the local Firebase emulators, never the real project: run via `npm run test:e2e`.
 const PORT = 4173;
 
 /** Samsung Galaxy S22 in Samsung Internet (Chromium). Playwright has no built-in profile for it. */
@@ -18,7 +19,12 @@ const GALAXY_S22 = {
 
 export default defineConfig({
   testDir: 'tests/e2e',
+  globalSetup: './tests/e2e/global-setup.ts',
   fullyParallel: true,
+  // `npm run test:e2e` runs the Android phones, then the iPhone with 2 workers: more parallel
+  // WebKit pages next to the Firebase emulators crash WebKit's browser process (seen during the
+  // axe sweeps) on an ordinary machine. Each pass on its own is stable.
+  workers: process.env.CI ? 2 : 4,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
@@ -34,7 +40,7 @@ export default defineConfig({
     { name: 'galaxy-s22', use: GALAXY_S22 },
   ],
   webServer: {
-    command: `npx vite preview --host 127.0.0.1 --port ${PORT} --strictPort`,
+    command: `npx vite preview --outDir dist-e2e --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: `http://127.0.0.1:${PORT}/hostbook/`,
     reuseExistingServer: !process.env.CI,
   },

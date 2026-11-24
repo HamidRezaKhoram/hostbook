@@ -8,6 +8,7 @@ export type PartyType =
   | 'cocktail'
   | 'bbq'
   | 'game-night'
+  | 'movie-night'
   | 'open-house'
   | 'holiday'
   | 'cottage'
@@ -76,6 +77,8 @@ export interface Guest {
   linkSentAt?: string;
   /** Capability token for this guest's live link (ADR-010), made on first share. */
   token?: string;
+  /** The guest's own latest reply from their link (server time). */
+  reply?: { rsvp: 'yes' | 'maybe' | 'no'; plusOnes?: number; note?: string; at: number };
 }
 
 export type TaskKind = 'bring' | 'do' | 'host';
@@ -119,6 +122,8 @@ export interface Task {
   /** Shown to the assignee. */
   note?: string;
   source?: 'template' | 'calculator' | 'manual';
+  /** Set when a guest claimed this from the bring board (their anonymous uid). */
+  claimUid?: string;
 }
 
 export interface RunItem {
@@ -195,7 +200,12 @@ export interface Party {
   notes: string;
   debrief?: { worked?: string; change?: string; clicked?: string; at?: string };
   /** Set once the party is shared live (ADR-010). */
-  share?: { partyId: string; publishedAt?: string };
+  share?: {
+    partyId: string;
+    publishedAt?: string;
+    /** Guest tokens in the last publish, so removed guests' links can be deleted. */
+    publishedTokens?: string[];
+  };
   createdAt: string;
   updatedAt: string;
   lastBackupAt?: string;

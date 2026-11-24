@@ -10,3 +10,4 @@ playwright-report/
 .env.*
 !.env.example
 .firebaserc
+dist-e2e/

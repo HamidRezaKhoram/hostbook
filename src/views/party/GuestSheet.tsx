@@ -8,7 +8,7 @@ import {
 } from '../../domain/constants';
 import { arrivalTime, leaveTime, tasksFor } from '../../domain/derive';
 import type { Guest, Party, Role, Rsvp } from '../../domain/types';
-import { formatTime } from '../../lib/format';
+import { formatDay, formatTime } from '../../lib/format';
 import { isLocalIso } from '../../lib/time';
 import { updateParty } from '../../store/parties';
 import { removeGuest, RSVP_LABELS } from './guest-actions';
@@ -23,10 +23,12 @@ export function GuestSheet({
   party,
   guest,
   onClose,
+  onShare,
 }: {
   party: Party;
   guest: Guest;
   onClose: () => void;
+  onShare: () => void;
 }) {
   const set = (recipe: (g: Guest) => Guest) =>
     updateParty(party.id, (p) => ({
@@ -44,6 +46,17 @@ export function GuestSheet({
       <Field label="Name">
         <Input value={guest.name} onValue={(v) => set((g) => ({ ...g, name: v }))} />
       </Field>
+      <button type="button" class="btn btn--block" onClick={onShare}>
+        Send {guest.name || 'them'} their link
+      </button>
+      {guest.linkSentAt && (
+        <p class="hint">Link sent {formatDay(guest.linkSentAt.slice(0, 16))}.</p>
+      )}
+      {guest.reply?.note && (
+        <p class="card reply-note">
+          <strong>{guest.name} wrote:</strong> “{guest.reply.note}”
+        </p>
+      )}
       <Segmented
         label="Coming?"
         options={RSVP_OPTIONS}

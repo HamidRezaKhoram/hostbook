@@ -21,9 +21,20 @@ describe('routes', () => {
     });
   });
 
+  it('parses share links', () => {
+    expect(parseHash('#/g/AAAA/BBBB')).toEqual({ name: 'guest', shareId: 'AAAA', token: 'BBBB' });
+    expect(parseHash('#/b/AAAA')).toEqual({ name: 'board', shareId: 'AAAA' });
+    expect(parseHash('#/i/N4Ig-xyz')).toEqual({ name: 'invite', payload: 'N4Ig-xyz' });
+    expect(parseHash('#/g/AAAA')).toEqual({ name: 'home' });
+    expect(parseHash('#/b/AAAA/x')).toEqual({ name: 'home' });
+  });
+
   const routes: Route[] = [
     { name: 'home' },
     { name: 'new' },
+    { name: 'guest', shareId: 'AAAA', token: 'B-_b' },
+    { name: 'board', shareId: 'AAAA' },
+    { name: 'invite', payload: 'N4Ig-_xyz' },
     ...TABS.map((tab) => ({ name: 'party', id: 'id with/slash', tab }) as const),
   ];
   it.each(routes)('round-trips %j', (r) => expect(parseHash(hrefFor(r))).toEqual(r));

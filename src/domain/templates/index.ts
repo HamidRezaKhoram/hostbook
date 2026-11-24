@@ -205,6 +205,44 @@ export const TEMPLATES: Record<PartyType, Template> = {
     checklist: checklist(true),
   },
 
+  'movie-night': {
+    durationMin: 210,
+    details: { food: 'snacks', alcohol: true, plusOnes: 'ask' },
+    tasks: [
+      mine('Shortlist 2–3 films for a vote', 'other'),
+      mine('Test the screen, sound, subtitles and streaming login', 'equipment'),
+      bring('Popcorn', 'snacks'),
+      bring('Candy and sweets', 'dessert'),
+      bring('Savoury snacks (quiet ones)', 'snacks'),
+      bring('Drinks', 'drinks'),
+      ...CORE_DRINKS,
+      bring('Blankets and pillows', 'equipment'),
+      bring('Floor cushions or extra chairs', 'equipment'),
+    ],
+    runSheet: [
+      { at: -30, title: 'Test screen and sound; dim the lights' },
+      { at: 0, title: 'Guests arrive: snacks and drinks' },
+      { at: 30, title: 'Vote on the film; phones away' },
+      { at: 40, title: 'Film starts' },
+      { at: 110, title: 'Pause for refills (long films)' },
+      { at: { fromEnd: -30 }, title: 'Credits: talk about the film' },
+      { at: { fromEnd: 0 }, title: 'Thank you and goodbyes' },
+    ],
+    checklist: checklist(true, [
+      { bucket: 'w1', text: 'Shortlist 2–3 films and check their running times', guideRef: '15' },
+      {
+        bucket: 'd2',
+        text: 'Test streaming login, sound and subtitles; download the film if Wi-Fi is weak',
+        guideRef: '15',
+      },
+      {
+        bucket: 'day',
+        text: 'A seat with a view for everyone, blankets out, glare off the screen',
+        guideRef: '15',
+      },
+    ]),
+  },
+
   'open-house': {
     durationMin: 240,
     details: { food: 'snacks', alcohol: true, plusOnes: 'yes', kids: 'yes' },

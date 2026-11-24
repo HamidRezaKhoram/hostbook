@@ -1,6 +1,7 @@
 # Hostbook: notes for Claude
 
-Phone-first, one-page party-hosting app on GitHub Pages. Status: M1–M3 done (shell, domain core, host screens). Next is M4 (share links via Firebase). Target phones: iPhone, Pixel 7+, Galaxy S22+. Live at https://hamidrezakhoram.github.io/hostbook/.
+Phone-first, one-page party-hosting app on GitHub Pages. Status: M1–M4 done (shell, domain core, host screens, live sharing). Next is M5 (calculator UI, guide tab, nudges, day mode). Target phones: iPhone, Pixel 7+, Galaxy S22+.
+- E2E runs against the Firebase emulators (`npm run build:e2e` → dist-e2e, `npm run test:e2e`), never the real project. Live at https://hamidrezakhoram.github.io/hostbook/.
 
 - Read first: `docs/planning/roadmap.md` (what's next + open questions), then `product-spec.md`, `architecture.md`, `data-model.md`, `ui-guidelines.md`.
 - Follow `CONTRIBUTING.md` exactly: run `./scripts/test-all.sh` before and after every change; UI fixes need a Playwright phone-profile test that fails on old code first.

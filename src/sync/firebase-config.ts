@@ -14,3 +14,8 @@ export const firebaseConfig: FirebaseOptions | null = env.VITE_FIREBASE_API_KEY
       appId: env.VITE_FIREBASE_APP_ID,
     }
   : null;
+
+/** Local Firebase emulators, only for test builds (`npm run build:e2e`). */
+export const firebaseEmulator = env.VITE_FIREBASE_EMULATOR_HOST
+  ? { host: env.VITE_FIREBASE_EMULATOR_HOST, authPort: 9099, databasePort: 9000 }
+  : undefined;

@@ -39,18 +39,19 @@ Each milestone ends with: `scripts/test-all.sh` green, deployed to GitHub Pages,
 - [x] Target phones: iPhone 13 (WebKit), Pixel 7 and Galaxy S22 (Chromium) profiles in every e2e run
 - **Result:** user stories 1–3, 5, 6, 9, 10 pass as Playwright tests on all three phones, plus undo, backup/restore, screen-switch and accessibility checks.
 
-## M4: Live sharing with Firebase (ADR-010)
-- [x] **Owner step:** Firebase project created (anonymous auth, RTDB us-central1, locked) — 2026-11-23
-- [x] `SyncPort` interface + Firebase adapter (anonymous auth, multi-path publish, race-safe claims)
-- [x] `database.rules.json` + 22 rules tests and 8 adapter tests in the emulators (local + CI)
-- [ ] **Owner step:** `scripts/firebase-login.sh` once, then `scripts/deploy-rules.sh` (live DB stays locked until then)
-- [ ] Publish guest projections; guest view `#/g/{partyId}/{token}` reads live
-- [ ] Guest RSVP and "I'll bring it" / swap request, merged into the host's party
-- [ ] Public potluck board `#/b/{partyId}`: claim open slots
-- [ ] Share sheet / copy; SMS and WhatsApp share text
-- [ ] Fallback URL-payload links when sync is off or offline
-- [ ] `.ics` download; reminder composer (1 week, day before)
-- **Done when:** story 4 passes against the emulator, and a real link sent over WhatsApp and SMS lets a real second phone RSVP and claim live.
+## M4: Live sharing with Firebase (ADR-010) ✅ (2026-11-24, pending a real-phone check)
+- [x] **Owner step:** Firebase project created (anonymous auth, RTDB us-central1); rules deployed
+- [x] `SyncPort` interface + lazy-loaded Firebase adapter (anonymous auth, multi-path publish, race-safe claims)
+- [x] `database.rules.json` + rules tests and adapter tests in the emulators (local + CI)
+- [x] Guest link `#/g/{share}/{token}`: their time, part, place (Google/Apple Maps), door code, calendar file
+- [x] Guest RSVP (+ plus-ones, note) and "I'll bring it" claims, merged into the host's party live
+- [x] Open bring board `#/b/{share}`: anyone picks an item with their name; new people join the guest list
+- [x] Share sheet: message presets (invite, 1 week, day before), Share…, copy, text message, WhatsApp
+- [x] Offline fallback links `#/i/{payload}` when there's no connection
+- [x] Auto-republish after host edits; stop sharing turns links off
+- [x] Two-phone e2e on all three phones through the emulators (story 4, board, stop sharing, offline link)
+- [ ] **Owner check:** send a real link over WhatsApp and SMS and RSVP from a second phone
+- [ ] Later: guest "can we swap?" request for host-assigned items (today guests can text the host)
 
 ## M5: Smarts and polish
 - [ ] Calculator UI → "Add as tasks / shopping list"

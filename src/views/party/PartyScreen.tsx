@@ -1,4 +1,5 @@
 import type { Tab } from '../../app/router';
+import { usePartySync } from '../../app/sharing';
 import { BottomNav } from '../../components/BottomNav';
 import type { Party } from '../../domain/types';
 import { Bring } from './Bring';
@@ -8,6 +9,7 @@ import { Overview } from './Overview';
 import { Timeline } from './Timeline';
 
 export function PartyScreen({ party, tab }: { party: Party; tab: Tab }) {
+  usePartySync(party);
   const View = { overview: Overview, guests: Guests, bring: Bring, timeline: Timeline, more: More }[
     tab
   ];

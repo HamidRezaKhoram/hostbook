@@ -1,6 +1,9 @@
 import { ToastHost } from '../components/ToastHost';
 import { UpdateToast } from '../components/UpdateToast';
 import { parties, ready } from '../store/parties';
+import { BoardPage } from '../views/guest/BoardPage';
+import { GuestPage } from '../views/guest/GuestPage';
+import { InvitePage } from '../views/guest/InvitePage';
 import { Home } from '../views/Home';
 import { NewParty } from '../views/NewParty';
 import { PartyScreen } from '../views/party/PartyScreen';
@@ -10,6 +13,9 @@ function Body() {
   const r = route.value;
   if (!ready.value) return <main class="app" aria-busy="true" />;
   if (r.name === 'new') return <NewParty />;
+  if (r.name === 'guest') return <GuestPage shareId={r.shareId} token={r.token} />;
+  if (r.name === 'board') return <BoardPage shareId={r.shareId} />;
+  if (r.name === 'invite') return <InvitePage payload={r.payload} />;
   if (r.name === 'party') {
     const party = parties.value.find((p) => p.id === r.id);
     if (party) return <PartyScreen party={party} tab={r.tab} />;

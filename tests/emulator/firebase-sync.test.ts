@@ -97,6 +97,8 @@ describe('Firebase sync', () => {
       reply: null,
     });
     expect(await leo.loadGuestView(partyId, newShareId())).toBeNull();
+    expect(await sam.loadInfo(partyId)).toEqual(info);
+    expect(await sam.loadInfo(newShareId())).toBeNull();
   });
 
   it('a guest RSVP reaches the host live', async () => {

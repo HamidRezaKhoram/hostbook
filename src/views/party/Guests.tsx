@@ -11,6 +11,7 @@ import { formatTime } from '../../lib/format';
 import { updateParty } from '../../store/parties';
 import { RSVP_LABELS } from './guest-actions';
 import { GuestSheet } from './GuestSheet';
+import { ShareSheet } from './ShareSheet';
 import { PartyKicker, type PartyProps } from './common';
 
 const RSVP_ORDER: Rsvp[] = ['yes', 'maybe', 'invited', 'no'];
@@ -52,6 +53,7 @@ function AddGuestsSheet({ party, onClose }: PartyProps & { onClose: () => void }
 export function Guests({ party }: PartyProps) {
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<string | null>(null);
+  const [sharing, setSharing] = useState<string | null>(null);
   const h = headcount(party);
   const diet = dietarySummary(party).line;
   const sorted = [...party.guests].sort(
@@ -111,7 +113,18 @@ export function Guests({ party }: PartyProps) {
         </ul>
       )}
       {adding && <AddGuestsSheet party={party} onClose={() => setAdding(false)} />}
-      {current && <GuestSheet party={party} guest={current} onClose={() => setEditing(null)} />}
+      {current && (
+        <GuestSheet
+          party={party}
+          guest={current}
+          onClose={() => setEditing(null)}
+          onShare={() => {
+            setEditing(null);
+            setSharing(current.id);
+          }}
+        />
+      )}
+      {sharing && <ShareSheet party={party} guestId={sharing} onClose={() => setSharing(null)} />}
     </Screen>
   );
 }

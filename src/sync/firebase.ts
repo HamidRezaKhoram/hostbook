@@ -20,7 +20,7 @@ import {
   update,
   type Database,
 } from 'firebase/database';
-import { firebaseConfig } from './firebase-config';
+import { firebaseConfig, firebaseEmulator } from './firebase-config';
 import type { Unsubscribe, SyncPort } from './port';
 import type {
   BoardEntry,
@@ -54,8 +54,9 @@ export function createFirebaseSync(opts: FirebaseSyncOptions = {}): SyncPort {
   const app = initializeApp(config, opts.appName ?? '[DEFAULT]');
   const auth: Auth = getAuth(app);
   const db: Database = getDatabase(app);
-  if (opts.emulator) {
-    const { host, authPort, databasePort } = opts.emulator;
+  const emulator = opts.emulator ?? firebaseEmulator;
+  if (emulator) {
+    const { host, authPort, databasePort } = emulator;
     connectAuthEmulator(auth, `http://${host}:${authPort}`, { disableWarnings: true });
     connectDatabaseEmulator(db, host, databasePort);
   }
@@ -109,34 +110,44 @@ export function createFirebaseSync(opts: FirebaseSyncOptions = {}): SyncPort {
       else await set(target, { uid: me, name, at: serverTimestamp() });
     },
 
-    watchReplies(partyId, cb) {
+    watchReplies(partyId, cb, onError) {
       let stop: Unsubscribe = () => {};
       let stopped = false;
       void uid().then(() => {
         if (stopped) return;
-        stop = onValue(share(partyId, 'replies'), (snap) =>
-          cb((snap.val() as Record<string, Reply> | null) ?? {}),
+        stop = onValue(
+          share(partyId, 'replies'),
+          (snap) => cb((snap.val() as Record<string, Reply> | null) ?? {}),
+          (e) => onError?.(e),
         );
-      });
+      }, onError);
       return () => {
         stopped = true;
         stop();
       };
     },
 
-    watchBoard(partyId, cb) {
+    watchBoard(partyId, cb, onError) {
       let stop: Unsubscribe = () => {};
       let stopped = false;
       void uid().then(() => {
         if (stopped) return;
-        stop = onValue(share(partyId, 'board'), (snap) =>
-          cb((snap.val() as Record<string, BoardEntry> | null) ?? {}),
+        stop = onValue(
+          share(partyId, 'board'),
+          (snap) => cb((snap.val() as Record<string, BoardEntry> | null) ?? {}),
+          (e) => onError?.(e),
         );
-      });
+      }, onError);
       return () => {
         stopped = true;
         stop();
       };
+    },
+
+    async loadInfo(partyId) {
+      await uid();
+      const snap = await get(share(partyId, 'info'));
+      return snap.exists() ? (snap.val() as ShareInfo) : null;
     },
 
     async loadGuestView(partyId, token): Promise<GuestView | null> {

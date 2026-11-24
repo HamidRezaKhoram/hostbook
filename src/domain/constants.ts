@@ -141,6 +141,7 @@ export const PARTY_TYPE_LABELS: Record<PartyType, string> = {
   cocktail: '2-hour drinks party',
   bbq: 'BBQ',
   'game-night': 'Game night',
+  'movie-night': 'Movie night',
   'open-house': 'Open house',
   holiday: 'Holiday party',
   cottage: 'Cottage weekend',

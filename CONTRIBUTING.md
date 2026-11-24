@@ -31,6 +31,7 @@ Rules for anyone (human or AI) building Hostbook. Read the [Product Spec](docs/p
 | Domain | Vitest + v8 coverage (≥ 90% lines enforced) | Calculator, headcount, arrival offsets, nudges, templates, share projections, link codec, migrations |
 | Store | Vitest + `fake-indexeddb` | Save/load, migration on load, export/import round-trip |
 | Firebase rules + sync | Vitest in the auth + database emulators (`npm run test:emulator`) | Every rule allows what it should and denies what it shouldn't; the real adapter works across host/guest "devices" |
+| Live sharing in the UI | Playwright against the emulators (`npm run build:e2e`, `npm run test:e2e`): a second browser context is a second phone | Host shares → guest replies/claims → host sees it live |
 | UI / flows | Playwright with touch, on three phones: `iPhone 13` (WebKit), `Pixel 7` and a custom `Galaxy S22` (Chromium, 360 px: the narrowest target) | User stories in the spec, one test each |
 | Offline | Playwright `context.setOffline(true)` | Create/edit after going offline, reload |
 | Visual sanity | Playwright screenshots at 360 / 375 / 430 widths | Catch overflow, clipped buttons |

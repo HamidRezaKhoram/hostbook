@@ -8,3 +8,4 @@ test-results/
 playwright-report/
 public/
 .firebaserc
+dist-e2e/

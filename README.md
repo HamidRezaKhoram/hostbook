@@ -4,18 +4,20 @@
 
 It also includes a hosting guide built from research on what makes gatherings work.
 
-> **Status:** M3 done: plan real parties at **https://hamidrezakhoram.github.io/hostbook/** on iPhone, Pixel 7+ or Galaxy S22+ (installable, works offline, data stays on your phone). Sharing links with guests comes next (M4); see the [Roadmap](docs/planning/roadmap.md).
+> **Status:** M4 done: plan parties and send each guest a live link at **https://hamidrezakhoram.github.io/hostbook/** (iPhone, Pixel 7+, Galaxy S22+; installable, works offline). Next: the calculator screen and the built-in guide (M5); see the [Roadmap](docs/planning/roadmap.md).
 
 ---
 
 ## What it does (MVP)
 
-- **Parties from templates**: dinner, potluck, 2-hour cocktail, BBQ, game night, open house, holiday, cottage weekend
+- **Parties from templates**: dinner, potluck, 2-hour cocktail, BBQ, game night, movie night, open house, holiday, cottage weekend
 - **Guests**: paste a list of names; RSVP; roles (helper, early "seed", cleanup, driver); **per-person arrival times**; dietary needs
 - **Bring board**: who brings what, by category, with gaps highlighted ("nobody's bringing ice")
 - **Tasks and run sheet**: host prep checklist from 6 weeks out to the thank-you; a timeline for the day
 - **Calculator**: drinks, ice, food and supplies for your headcount and party length
-- **Per-guest share links**: "Arrive 7:00 p.m. · bring 5 kg of ice · door code 4412". Guests RSVP and claim items live (Firebase)
+- **Per-guest share links**: "Arrive 7:00 p.m. · bring 5 kg of ice · door code 4412". Guests RSVP and pick items live (Firebase); send by Share, text message or WhatsApp; offline links when there's no signal
+- **Open bring board**: one link for a potluck where anyone picks what to bring
+- **Directions**: Google Maps and Apple Maps buttons wherever there's an address; calendar file for guests
 - **Canadian by default**: kg first (lb in brackets), °C, en-CA dates, CAD, Health Canada allergens
 - **Notes and debrief**: so the next party is better
 - **The Guide**, built in and available offline

@@ -716,3 +716,23 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+/* ---- Sharing ---- */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-2);
+}
+
+.map-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.reply-note {
+  display: block;
+  background: var(--color-surface-2);
+  box-shadow: none;
+}

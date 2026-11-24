@@ -18,6 +18,7 @@ const TYPE_HINTS: Record<PartyType, string> = {
   cocktail: 'Short, mixing, name tags',
   bbq: 'Grill, sides, lawn games',
   'game-night': 'Games and snacks',
+  'movie-night': 'Film, popcorn, blankets',
   'open-house': 'Drop in any time',
   holiday: 'Treats, toast, mingling',
   cottage: 'A weekend away, meal teams',

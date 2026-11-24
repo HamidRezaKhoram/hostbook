@@ -59,6 +59,7 @@ This sentence settles later decisions for you: who to invite (and who not to), h
 | Open house / drop-in | 15–60 | 4–6 h window | Medium | Holidays, housewarmings, mixed ages |
 | BBQ / backyard | 8–40 | 3–5 h | Medium | Summer, families, casual |
 | Game night | 4–12 | 3–4 h | Low | Friends who already know each other |
+| Movie night | 3–12 | 3–3.5 h | Low | Cozy nights, low-key friends, rainy weekends |
 | Theme party | 10–40 | 3–5 h | High | Big energy, dressing up |
 | Cottage / weekend trip | 4–16 | 2–3 days | Very high (share it) | Real bonding; needs meal rota and roles |
 
@@ -341,6 +342,14 @@ Ending well is as important as opening well, and most hosts never plan it.
 - Choose games for the group size and **teach them quickly** (have the rules ready).
 - Party games for big groups, strategy games for small. Have a short warm-up game for latecomers.
 - Snacks that don't wreck cards: no greasy fingers, put out napkins.
+
+### Movie night (3–12)
+- **Seats first.** Everyone needs a view of the screen: count seats, then add floor cushions, beanbags and blankets. Dim the lights and kill the glare on the screen.
+- **Pick before people arrive.** Shortlist 2–3 films that fit the group and let guests vote when they arrive (or in the group chat). Check the running time so you know the end.
+- **Test the tech the day before:** streaming login, download it if the Wi-Fi is weak, sound, subtitles, and a backup film.
+- **Quiet food.** Popcorn, candy, and finger food that doesn't crunch through the best scene. Serve it before the film starts, not halfway through.
+- **Talk before and after, not during.** 30 minutes of chat and snacks first; a pause for refills if the film is over 2 hours; 15–30 minutes after the credits to talk about it. That's where the night's conversation happens.
+- **Phones away** during the film (ask nicely, once).
 
 ### Cottage / weekend trip (4–16)
 This one is many parties in a row. It needs roles.

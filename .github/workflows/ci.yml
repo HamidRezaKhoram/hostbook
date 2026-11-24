@@ -42,8 +42,10 @@ jobs:
           VITE_FIREBASE_DATABASE_URL: ${{ secrets.VITE_FIREBASE_DATABASE_URL }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-      - name: E2E (iPhone 13 · Pixel 7 · Galaxy S22)
-        run: npx playwright test
+      - name: Test build (talks to the Firebase emulators)
+        run: npm run -s build:e2e
+      - name: E2E (iPhone 13 · Pixel 7 · Galaxy S22, live sharing on emulators)
+        run: npm run -s test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

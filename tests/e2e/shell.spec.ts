@@ -143,33 +143,32 @@ test('follows the phone dark mode', async ({ page }) => {
   expect(dark).toBe('rgb(28, 24, 21)');
 });
 
-test('has no serious accessibility problems on any screen, light or dark', async ({ page }) => {
-  const check = async (where: string) => {
-    const { violations } = await new AxeBuilder({ page }).analyze();
-    const bad = violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
-    expect(bad.map((v) => `${where}: ${v.id} ${v.nodes[0]?.target}`)).toEqual([]);
-  };
-  await createParty(page, { names: ['Maya', 'Leo'] });
-  for (const scheme of ['light', 'dark'] as const) {
+for (const scheme of ['light', 'dark'] as const) {
+  test(`has no serious accessibility problems on any screen (${scheme})`, async ({ page }) => {
+    test.slow(); // axe runs on every screen
+    const check = async (where: string) => {
+      const { violations } = await new AxeBuilder({ page }).analyze();
+      const bad = violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+      expect(bad.map((v) => `${where}: ${v.id} ${v.nodes[0]?.target}`)).toEqual([]);
+    };
     await page.emulateMedia({ colorScheme: scheme });
     await page.goto('./');
-    await check(`${scheme} home`);
-    await page.goto('./#/new');
-    await check(`${scheme} new`);
-    await page.goto('./');
-    await page.getByRole('link', { name: /Dumpling Night/ }).tap();
-    await check(`${scheme} overview`);
+    await check('home');
+    await createParty(page, { names: ['Maya', 'Leo'] });
+    await check('overview');
     for (const label of TABS.slice(1)) {
       await tab(page, label);
-      await check(`${scheme} ${label}`);
+      await check(label);
     }
     await tab(page, 'Guests');
     await page.getByRole('button', { name: /Maya/ }).tap();
     await expect(sheet(page)).toBeVisible();
-    await check(`${scheme} guest sheet`);
+    await check('guest sheet');
     await sheet(page).getByRole('button', { name: 'Done' }).tap();
-  }
-});
+    await page.goto('./#/new');
+    await check('new party');
+  });
+}
 
 test('is installable: manifest and icons are served under /hostbook/', async ({
   page,

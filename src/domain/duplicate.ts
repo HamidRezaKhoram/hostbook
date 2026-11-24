@@ -15,13 +15,18 @@ export function duplicateParty(
     id: id(),
     name: `${party.name} (copy)`,
     guests: party.guests.map(
-      ({ token: _t, attended: _a, linkSentAt: _l, arrivalOverride: _o, ...g }) => ({
+      ({ token: _t, attended: _a, linkSentAt: _l, arrivalOverride: _o, reply: _r, ...g }) => ({
         ...g,
         id: guestIds.get(g.id)!,
         rsvp: 'invited',
       }),
     ),
-    tasks: party.tasks.map((t) => ({ ...t, id: id(), assigneeIds: [], status: 'open' })),
+    tasks: party.tasks.map(({ claimUid: _c, ...t }) => ({
+      ...t,
+      id: id(),
+      assigneeIds: [],
+      status: 'open',
+    })),
     runSheet: party.runSheet.map((r) => {
       const { done: _d, whoIds: _w, ...item } = r;
       return { ...item, id: id() };

@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
 import { exportBackup } from '../../app/backup-actions';
+import { stopSharing } from '../../app/sharing';
 import { go } from '../../app/route';
 import { partyHref } from '../../app/router';
 import { showToast } from '../../app/toast';
@@ -109,6 +110,31 @@ export function More({ party }: PartyProps) {
           />
         </Field>
       </section>
+
+      {party.share && (
+        <section class="card stack-sm" aria-labelledby="sharing">
+          <h2 id="sharing" class="card__title">
+            Sharing
+          </h2>
+          <p class="muted">
+            Guests' links are live: replies and bring-list picks show up here, and your changes
+            reach them automatically.
+          </p>
+          <button
+            type="button"
+            class="btn btn--danger btn--block"
+            onClick={() =>
+              stopSharing(party.id)
+                .then(() => showToast("Stopped sharing. Old links won't work any more."))
+                .catch((e: unknown) =>
+                  showToast(`Couldn't stop sharing: ${(e as Error).message}`, undefined, true),
+                )
+            }
+          >
+            Stop sharing
+          </button>
+        </section>
+      )}
 
       <section class="card stack-sm" aria-labelledby="party-actions">
         <h2 id="party-actions" class="card__title">

@@ -1,4 +1,4 @@
-import type { BoardEntry, GuestView, Reply, ReplyInput, SharePublish } from './types';
+import type { BoardEntry, GuestView, Reply, ReplyInput, ShareInfo, SharePublish } from './types';
 
 export type Unsubscribe = () => void;
 
@@ -17,10 +17,21 @@ export interface SyncPort {
   unpublish(partyId: string): Promise<void>;
   /** Host assigns a board slot to someone by name, or clears it with `null`. */
   assign(partyId: string, slotId: string, name: string | null): Promise<void>;
-  watchReplies(partyId: string, cb: (replies: Record<string, Reply>) => void): Unsubscribe;
+  /** `onError` fires if the listen is refused (e.g. the share doesn't exist yet); it then stops. */
+  watchReplies(
+    partyId: string,
+    cb: (replies: Record<string, Reply>) => void,
+    onError?: (e: Error) => void,
+  ): Unsubscribe;
 
   // ---- guest (and host) ----
-  watchBoard(partyId: string, cb: (board: Record<string, BoardEntry>) => void): Unsubscribe;
+  watchBoard(
+    partyId: string,
+    cb: (board: Record<string, BoardEntry>) => void,
+    onError?: (e: Error) => void,
+  ): Unsubscribe;
+  /** Party logistics for the open bring board; `null` if the share doesn't exist. */
+  loadInfo(partyId: string): Promise<ShareInfo | null>;
   /** `null` when the link is wrong or the host removed this guest. */
   loadGuestView(partyId: string, token: string): Promise<GuestView | null>;
   sendReply(partyId: string, token: string, reply: ReplyInput): Promise<void>;

@@ -3,11 +3,20 @@
 //   #/                 your parties
 //   #/new              start a party
 //   #/p/{id}[/{tab}]   one party: overview, guests, bring, timeline, more
+//   #/g/{share}/{token} a guest's live link (ADR-010)
+//   #/b/{share}        the open bring board for a party
+//   #/i/{payload}      an offline guest link (data in the URL, ADR-005)
 
 export const TABS = ['overview', 'guests', 'bring', 'timeline', 'more'] as const;
 export type Tab = (typeof TABS)[number];
 
-export type Route = { name: 'home' } | { name: 'new' } | { name: 'party'; id: string; tab: Tab };
+export type Route =
+  | { name: 'home' }
+  | { name: 'new' }
+  | { name: 'party'; id: string; tab: Tab }
+  | { name: 'guest'; shareId: string; token: string }
+  | { name: 'board'; shareId: string }
+  | { name: 'invite'; payload: string };
 
 const isTab = (s: string): s is Tab => (TABS as readonly string[]).includes(s);
 
@@ -15,6 +24,13 @@ export function parseHash(hash: string): Route {
   const path = hash.replace(/^#\/?/, '').split('?')[0]!.replace(/\/+$/, '');
   const parts = path.split('/').map((p) => decodeURIComponent(p));
   if (parts[0] === 'new' && parts.length === 1) return { name: 'new' };
+  if (parts[0] === 'g' && parts[1] && parts[2] && parts.length === 3) {
+    return { name: 'guest', shareId: parts[1], token: parts[2] };
+  }
+  if (parts[0] === 'b' && parts[1] && parts.length === 2)
+    return { name: 'board', shareId: parts[1] };
+  if (parts[0] === 'i' && parts[1] && parts.length === 2)
+    return { name: 'invite', payload: parts[1] };
   if (parts[0] === 'p' && parts[1] && parts.length <= 3) {
     const tab = parts[2] ?? 'overview';
     if (isTab(tab)) return { name: 'party', id: parts[1], tab };
@@ -30,6 +46,12 @@ export function hrefFor(route: Route): string {
       return '#/new';
     case 'party':
       return `#/p/${encodeURIComponent(route.id)}${route.tab === 'overview' ? '' : `/${route.tab}`}`;
+    case 'guest':
+      return `#/g/${encodeURIComponent(route.shareId)}/${encodeURIComponent(route.token)}`;
+    case 'board':
+      return `#/b/${encodeURIComponent(route.shareId)}`;
+    case 'invite':
+      return `#/i/${route.payload}`;
   }
 }
 

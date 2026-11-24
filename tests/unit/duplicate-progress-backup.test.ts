@@ -9,6 +9,8 @@ describe('duplicateParty: same party next year', () => {
   it('keeps the plan and the people, resets what happened', () => {
     const p = withShareIds(sampleParty(), seq('s'));
     p.guests[0]!.attended = true;
+    p.guests[0]!.reply = { rsvp: 'yes', note: 'Yay', at: 1 };
+    p.tasks[1]!.claimUid = 'someone';
     p.guests[0]!.arrivalOverride = '2026-12-12T18:00';
     p.checklist[0]!.done = true;
     p.runSheet[0]!.done = true;
@@ -25,6 +27,8 @@ describe('duplicateParty: same party next year', () => {
       copy.guests.every((g) => g.rsvp === 'invited' && !g.token && g.attended === undefined),
     ).toBe(true);
     expect(copy.guests[0]!.arrivalOverride).toBeUndefined();
+    expect(copy.guests[0]!.reply).toBeUndefined();
+    expect(copy.tasks.every((t) => t.claimUid === undefined)).toBe(true);
     expect(copy.guests[0]!.roles).toEqual(['helper']);
     expect(copy.guests[2]!.dietary.allergies).toEqual(['tree-nut']);
     expect(copy.tasks.every((t) => t.status === 'open' && t.assigneeIds.length === 0)).toBe(true);
