@@ -1,0 +1,63 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "shares": {
+      "$partyId": {
+        ".read": "auth != null && data.child('owner').val() === auth.uid",
+        ".write": "auth != null && $partyId.matches(/^[A-Za-z0-9_-]{22}$/) && (data.child('owner').val() === auth.uid || (!data.exists() && newData.child('owner').val() === auth.uid))",
+        ".validate": "newData.hasChildren(['owner', 'info'])",
+        "owner": {
+          ".validate": "newData.isString() && (data.exists() ? newData.val() === data.val() : newData.val() === auth.uid)"
+        },
+        "info": {
+          ".read": true,
+          ".validate": "newData.hasChildren(['name', 'start', 'tz', 'hostName'])"
+        },
+        "guests": {
+          "$token": {
+            ".read": true,
+            ".validate": "$token.matches(/^[A-Za-z0-9_-]{22}$/) && newData.hasChildren(['name', 'arrival'])"
+          }
+        },
+        "board": {
+          ".read": true,
+          "$slotId": {
+            ".validate": "newData.hasChild('slot')",
+            "slot": {
+              ".validate": "newData.hasChild('title')"
+            },
+            "claim": {
+              ".write": "auth != null && data.parent().child('slot').exists() && (data.exists() ? data.child('uid').val() === auth.uid : newData.child('uid').val() === auth.uid)",
+              ".validate": "newData.hasChildren(['uid', 'name', 'at'])",
+              "uid": { ".validate": "newData.isString()" },
+              "name": {
+                ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 40"
+              },
+              "at": { ".validate": "newData.isNumber() && newData.val() <= now" },
+              "$other": { ".validate": false }
+            },
+            "$other": { ".validate": false }
+          }
+        },
+        "replies": {
+          "$token": {
+            ".read": true,
+            ".write": "auth != null && root.child('shares').child($partyId).child('guests').child($token).exists()",
+            ".validate": "newData.hasChildren(['rsvp', 'at'])",
+            "rsvp": {
+              ".validate": "newData.isString() && newData.val().matches(/^(yes|maybe|no)$/)"
+            },
+            "plusOnes": {
+              ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10 && newData.val() % 1 === 0"
+            },
+            "note": { ".validate": "newData.isString() && newData.val().length <= 500" },
+            "at": { ".validate": "newData.isNumber() && newData.val() <= now" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}

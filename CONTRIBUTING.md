@@ -30,6 +30,7 @@ Rules for anyone (human or AI) building Hostbook. Read the [Product Spec](docs/p
 |---|---|---|
 | Domain | Vitest | Calculator, headcount, arrival offsets, nudges, templates, share codec, migrations |
 | Store | Vitest + `fake-indexeddb` | Save/load, migration on load, export/import round-trip |
+| Firebase rules + sync | Vitest in the auth + database emulators (`npm run test:emulator`) | Every rule allows what it should and denies what it shouldn't; the real adapter works across host/guest "devices" |
 | UI / flows | Playwright, `iPhone 13` + `Pixel 7` device profiles, touch enabled | User stories in the spec, one test each |
 | Offline | Playwright `context.setOffline(true)` | Create/edit after going offline, reload |
 | Visual sanity | Playwright screenshots at 360 / 375 / 430 widths | Catch overflow, clipped buttons |
@@ -61,7 +62,9 @@ Playwright's WebKit can't run service workers, so offline tests run on the Pixel
 - `main` is always deployable; GitHub Actions deploys it to Pages.
 - Small commits, imperative messages ("Add bring board gap highlighting").
 - Work on branches for anything bigger than a small fix; CI must pass before merge.
-- Never commit secrets. The Firebase web config is public by design; security comes from `database.rules.json`, which must have emulator tests for every rule before it is deployed.
+- **Never commit secrets or keys**, including the Firebase config: it lives in `.env.local` (git-ignored, template `.env.example`) and in GitHub repository secrets (`VITE_FIREBASE_*`) for CI. Before every commit, check `git diff --cached` for keys.
+- Even with the config out of git, security comes from `database.rules.json`, which must have emulator tests for every rule before it is deployed.
+- Changing `database.rules.json`: add or adjust tests in `tests/emulator/rules.test.ts`, prove a loosened rule fails them, then deploy with `scripts/deploy-rules.sh` (tests first, then deploy). CI does not deploy rules.
 
 ## Adding a party template
 

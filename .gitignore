@@ -5,3 +5,8 @@ test-results/
 playwright-report/
 .vite/
 *.log
+# Secrets and per-machine Firebase settings: never commit
+.env
+.env.*
+!.env.example
+.firebaserc

@@ -53,12 +53,13 @@ See the full [Product Spec](docs/planning/product-spec.md).
 
 ## Getting started
 
-No Node needed on your machine: the scripts run everything in the Playwright container (podman or docker).
+No Node or Java needed on your machine: the scripts run everything in a dev container (Playwright + Java for the Firebase emulators), built automatically from `scripts/Containerfile` with podman or docker.
 
 ```bash
 scripts/dev.sh        # dev server: http://localhost:5173/hostbook/ (open it on your phone via your LAN IP too)
 scripts/test-all.sh   # typecheck + lint + unit + build + e2e; must pass before and after every change
 scripts/ct.sh npm run build   # run any command in the container
+scripts/deploy-rules.sh       # test + deploy Firebase database rules (after a one-time scripts/firebase-login.sh)
 python3 tools/make-icons.py   # redraw the app icons
 ```
 

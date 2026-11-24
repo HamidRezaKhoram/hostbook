@@ -79,17 +79,21 @@ Decisions are written as short ADRs (Architecture Decision Records). Change a de
 - **Decision:** Guest links and potluck boards are backed by **Firebase Realtime Database** (Spark free plan) with **Anonymous Auth**. Guests can RSVP and claim open items live, and the host sees it instantly.
 - **What goes to Firebase:** only what guests are meant to see, plus their replies:
   ```
-  /shares/{partyId}/info                 party name, time, place, guest note        (read: anyone with the link)
-  /shares/{partyId}/board/{taskId}       open/claimed bring-slots (title, qty, claimer first name)
-  /shares/{partyId}/guests/{token}       that guest's time, role, tasks             (read: holder of the token)
-  /shares/{partyId}/replies/{token}      rsvp, claims, message                      (write: holder of the token)
-  /shares/{partyId}/owner                host's anonymous uid                       (write once)
+  /shares/{partyId}/owner                      host's anonymous uid           set on creation, never changes
+  /shares/{partyId}/info                       name, time, place, food, note  read: anyone with the party id
+  /shares/{partyId}/board/{slotId}/slot        title, qty, category           read: anyone · write: owner
+  /shares/{partyId}/board/{slotId}/claim       uid, name, at                  claim if open, release own · owner: any
+  /shares/{partyId}/guests/{token}             time, roles, tasks, door code,  read: token holder · write: owner
+                                               host phone
+  /shares/{partyId}/replies/{token}            rsvp, plusOnes, note, at       read: token holder, owner · write: token holder
   ```
+  The owner can read and delete the whole share. Nobody else can list `guests` or `replies`, so a token can't be discovered. The door code and host phone live in each guest record, not in `info`, so the public potluck board never shows them.
   The host's full party (contacts, dietary data, private notes) **stays on the host's device** in IndexedDB. The host app publishes a filtered projection to `/shares` and merges `/replies` back in.
 - **IDs:** `partyId` and guest `token` are 128-bit random base64url strings. A link is `…/hostbook/#/g/{partyId}/{token}` (or `#/b/{partyId}` for the public potluck board).
-- **Rules:** only `owner` writes `info`, `board` and `guests`. A token holder writes only its own `replies/{token}` and can claim a board slot only if it's open (`!data.exists()`). Rules are tested in the Firebase emulator in CI.
-- **Isolation:** all Firebase code lives in `src/sync/firebase.ts` behind a `SyncPort` interface and is lazy-loaded (modular SDK, only `app`, `auth`, `database`). Domain code never imports Firebase. With sync off, the app falls back to URL-payload links (ADR-005).
-- **Config:** the Firebase web config is public by design and lives in `src/sync/firebase-config.ts`. Security comes from the rules, plus App Check (reCAPTCHA Enterprise) once traffic warrants it.
+- **Rules** (`database.rules.json`): only the owner writes `info`, `board/*/slot` and `guests`. A token holder writes only `replies/{token}`, and only for tokens the host issued. Anyone signed in can claim an open slot in their own uid, so a two-guest race has exactly one winner. Every value guests write is type- and length-checked, and unknown keys are rejected. `tests/emulator/rules.test.ts` covers each rule; `tests/emulator/firebase-sync.test.ts` runs the real adapter with host and guest "devices". Both run in CI.
+- **Known limit:** ownership is the host's *anonymous* uid on one device. Clearing site data or switching phones loses edit rights to existing shares (the local party is safe in the backup; it can be republished under a new id). Fix planned with co-host support in M6: link the anonymous account to Google sign-in.
+- **Isolation:** all Firebase code lives in `src/sync/firebase.ts` behind the `SyncPort` interface (`src/sync/port.ts`) and is lazy-loaded (modular SDK, only `app`, `auth`, `database`). Domain code never imports Firebase. With sync off, the app falls back to URL-payload links (ADR-005).
+- **Config:** never in the repo. `src/sync/firebase-config.ts` reads `VITE_FIREBASE_*` from `.env.local` (git-ignored; template in `.env.example`) locally and from GitHub repository secrets in CI. Note: any Firebase web app ships these values inside its built JavaScript to every visitor. Keeping them out of git avoids publishing them in the source, and the real protection is the database rules plus restricting the API key to the site's domain in Google Cloud. The adapter publishes with multi-path `update()`s, never `set()` on the share, so republishing keeps guests' replies and claims. Security comes from the rules, plus App Check (reCAPTCHA Enterprise) once traffic warrants it.
 - **Region:** RTDB has no Canadian region, so use `us-central1` (the closest). Privacy note in the app: guest-visible party info is stored by Google in the US.
 - **Free-tier fit:** about 100 simultaneous connections and 1 GB stored is plenty for personal parties. Verify on firebase.google.com/pricing before launch.
 

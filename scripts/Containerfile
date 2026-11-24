@@ -1,0 +1,6 @@
+# Dev/test image: Playwright (Node 22 + browsers) plus Java 21 for the Firebase emulators.
+# Built automatically by scripts/ct.sh. Keep the tag in ct.sh in step with this file.
+FROM mcr.microsoft.com/playwright:v1.49.1-noble
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends openjdk-21-jre-headless \
+ && rm -rf /var/lib/apt/lists/*

@@ -39,9 +39,10 @@ Each milestone ends with: `scripts/test-all.sh` green, deployed to GitHub Pages,
 - **Done when:** user stories 1–3, 5, 6, 9, 10 in `product-spec.md` pass as Playwright tests on both phone profiles.
 
 ## M4: Live sharing with Firebase (ADR-010)
-- [ ] **Owner step:** create the Firebase project (see "Firebase setup" below)
-- [ ] `SyncPort` interface + lazy-loaded Firebase adapter (anonymous auth)
-- [ ] `database.rules.json` + rules tests in the Firebase emulator (CI)
+- [x] **Owner step:** Firebase project created (anonymous auth, RTDB us-central1, locked) — 2026-11-23
+- [x] `SyncPort` interface + Firebase adapter (anonymous auth, multi-path publish, race-safe claims)
+- [x] `database.rules.json` + 22 rules tests and 8 adapter tests in the emulators (local + CI)
+- [ ] **Owner step:** `scripts/firebase-login.sh` once, then `scripts/deploy-rules.sh` (live DB stays locked until then)
 - [ ] Publish guest projections; guest view `#/g/{partyId}/{token}` reads live
 - [ ] Guest RSVP and "I'll bring it" / swap request, merged into the host's party
 - [ ] Public potluck board `#/b/{partyId}`: claim open slots
@@ -82,4 +83,6 @@ Each milestone ends with: `scripts/test-all.sh` green, deployed to GitHub Pages,
 3. **Build → Realtime Database → Create database** → location **us-central1** → start in **locked mode** (we deploy real rules).
 4. **Project settings (⚙) → Your apps → Web (`</>`)** → nickname `hostbook-web`, no Firebase Hosting → copy the `firebaseConfig` object.
 5. **Authentication → Settings → Authorized domains → Add** `hamidrezakhoram.github.io`.
-6. Paste the `firebaseConfig` into the chat (it's not secret). For deploying rules from this machine, also run `! npx firebase-tools login` once.
+6. Paste the `firebaseConfig` into the chat (it's not secret). ✅ Done 2026-11-23.
+Never paste the config into a tracked file: it goes in `.env.local` (git-ignored) and GitHub secrets.
+7. In your own terminal, run `scripts/firebase-login.sh` once (interactive). Then `scripts/deploy-rules.sh` tests the rules and deploys them. Run it again whenever `database.rules.json` changes.

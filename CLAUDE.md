@@ -7,5 +7,7 @@ Phone-first, one-page party-hosting app on GitHub Pages. Status: M1 (app shell) 
 - Numbers (calculator, arrival offsets) and templates come from `docs/guide/`. Change doc and code together.
 - Domain logic in `src/domain/` stays pure. Share links must never include other guests' data or host notes.
 - Stack: Vite + Preact + TS strict, plain CSS tokens, hash routing, IndexedDB, vite-plugin-pwa, base path `/hostbook/`.
-- No Node on the host: run everything via `scripts/ct.sh` / `scripts/test-all.sh` (Playwright 1.49.1 container).
+- No Node on the host: run everything via `scripts/ct.sh` / `scripts/test-all.sh` (Playwright 1.49.1 + Java 21 container from `scripts/Containerfile`).
+- **Never commit keys or Firebase config values.** They live in `.env.local` (git-ignored) and GitHub secrets.
+- Firebase: `src/sync/` (SyncPort + adapter), `database.rules.json` (emulator-tested in `tests/emulator/`). Deploy rules only via `scripts/deploy-rules.sh`.
 - Owner decisions (2026-11-23): Firebase RTDB for live sharing (ADR-010; the owner must create the project, see roadmap), public repo, Canadian units/locale (ADR-011).
